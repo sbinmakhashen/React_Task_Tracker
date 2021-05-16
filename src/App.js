@@ -1,6 +1,7 @@
 import Header from './Components/Header';
 import Tasks from './Components/Tasks';
 import { useState } from 'react';
+import FormTask from './Components/FormTask';
 function App() {
   const [reminder, setReminder] = useState(false);
 
@@ -15,7 +16,7 @@ function App() {
     {
       id: 2,
       text: 'Get braces',
-      date: 'around May to late May. Date is unknown',
+      date: 'around May to late May Date is unknown',
       reminder: false,
     },
     {
@@ -30,16 +31,25 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id));
   };
   // show reminder if reminder is set to true
-  const showReminder = (id) =>
+  const showReminder = (id) => {
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, reminder: !task.reminder } : task
       )
     );
+  };
+  // Add a task on submit
+  const addTask = (task) => {
+    // hold tasks in a const
+    const newTasks = { ...task };
+    //adding new task to the tasks
+    setTasks([...tasks, newTasks]);
+  };
 
   return (
     <div className='container'>
       <Header />
+      <FormTask addTask={addTask} />
       <Tasks tasks={tasks} deleteT={deleteTask} reminder={showReminder} />
     </div>
   );
