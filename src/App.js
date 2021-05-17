@@ -1,32 +1,29 @@
 import Header from './Components/Header';
 import Tasks from './Components/Tasks';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FormTask from './Components/FormTask';
 function App() {
   const [showForm, setShowForm] = useState(true);
   // const [reminder, setReminder] = useState(false);
-
   // JSON Array fo tasks
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: 'Walk in the park',
-      date: 'May 15th at 10AM',
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: 'Get braces',
-      date: 'around May to late May Date is unknown',
-      reminder: false,
-    },
-    {
-      id: 3,
-      text: 'Take breaks',
-      date: 'May 15th after every 30 minutes',
-      reminder: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  // fetching atsks from json server
+  useEffect(() => {
+    // showing Tasks in the UI
+    const showTasks = async () => {
+      await fetchTasks();
+      setTasks(showTasks);
+    };
+    showTasks();
+  }, []);
+  // Fetch tasks
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks');
+    const data = await res.json();
+    console.log(data);
+    return data;
+  };
   // Delete task
   const deleteTask = async (id) => {
     // deleting from the UI
@@ -56,7 +53,7 @@ function App() {
         changeOnCLick={showForm}
       />
       {showForm && <FormTask addTask={addTask} />}
-      {tasks.length > 0 ? (
+      {tasks ? (
         <Tasks tasks={tasks} deleteT={deleteTask} reminder={showReminder} />
       ) : (
         'No Tasks Found'
