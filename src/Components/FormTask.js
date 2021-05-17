@@ -19,7 +19,10 @@ const FormTask = ({ addTask }) => {
     // reset input feilds when submittied a task
     setText('');
     setDate('');
-    setReminder('');
+    setReminder(false);
+  };
+  const toggleReminder = () => {
+    setReminder([reminder ? !reminder : '']);
   };
   return (
     <form onSubmit={submit}>
@@ -42,7 +45,13 @@ const FormTask = ({ addTask }) => {
         />
       </div>
       <div className='form-control form-control-check'>
-        <label>Set Reminder: </label> <input value={reminder} type='checkbox' />
+        <label>Set Reminder: </label>{' '}
+        <input
+          value={reminder}
+          type='checkbox'
+          checked={reminder}
+          onChange={(e) => setReminder(e.target.checked)}
+        />
       </div>
       <input
         type='submit'

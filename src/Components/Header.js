@@ -1,13 +1,14 @@
-const Header = () => {
+import Button from './Button';
+
+const Header = ({ toggleBtn, changeOnCLick }) => {
   return (
     <div className='header'>
       <h1>Task Tracker</h1>
-      <button
-        className='btn'
-        style={{ backgroundColor: 'green', fontWeight: 'bold' }}
-      >
-        Add
-      </button>
+      <Button
+        onClick={toggleBtn}
+        text={changeOnCLick ? 'close' : 'open'}
+        color={changeOnCLick ? 'red' : 'green'}
+      />
     </div>
   );
 };

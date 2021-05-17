@@ -3,7 +3,8 @@ import Tasks from './Components/Tasks';
 import { useState } from 'react';
 import FormTask from './Components/FormTask';
 function App() {
-  const [reminder, setReminder] = useState(false);
+  const [showForm, setShowForm] = useState(true);
+  // const [reminder, setReminder] = useState(false);
 
   // JSON Array fo tasks
   const [tasks, setTasks] = useState([
@@ -27,7 +28,9 @@ function App() {
     },
   ]);
   // Delete task
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    // deleting from the UI
+
     setTasks(tasks.filter((task) => task.id !== id));
   };
   // show reminder if reminder is set to true
@@ -48,9 +51,16 @@ function App() {
 
   return (
     <div className='container'>
-      <Header />
-      <FormTask addTask={addTask} />
-      <Tasks tasks={tasks} deleteT={deleteTask} reminder={showReminder} />
+      <Header
+        toggleBtn={() => setShowForm(!showForm)}
+        changeOnCLick={showForm}
+      />
+      {showForm && <FormTask addTask={addTask} />}
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} deleteT={deleteTask} reminder={showReminder} />
+      ) : (
+        'No Tasks Found'
+      )}
     </div>
   );
 }
