@@ -13,6 +13,7 @@ const FormTask = ({ addTask }) => {
     // validate if there is no text
     if (text === '' || date === '') {
       alert('Please add a task and a date');
+      return null;
     }
     // adding the tasks I inserted in the input feild
     addTask({ text, date, reminder });
